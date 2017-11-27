@@ -12,6 +12,5 @@ RUN make -C ./wiringPi/wiringPi static CFLAGS="$CFLAGS -I." LDFLAGS="$LDFLAGS" |
 
 COPY ./src .
 RUN gcc -x c ./dht_reader.c -I./wiringPi/wiringPi -L./wiringPi/wiringPi -l wiringPi -o dht_reader
-RUN gcc -x c ./dht_reader.c -I./wiringPi/wiringPi -L./wiringPi/wiringPi -l wiringPi -static -o dht_reader2
 
 ENTRYPOINT [ "./dht_reader" ]
