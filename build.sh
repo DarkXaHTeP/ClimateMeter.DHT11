@@ -4,4 +4,5 @@ echo "Using next versions:"
 gcc -v
 gpio -v
 
-gcc -o dht_reader dht_reader.c -l wiringPi
+mkdir build
+gcc -o build/dht_reader src/dht_reader.c -l wiringPi
