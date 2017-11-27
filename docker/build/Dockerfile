@@ -1,4 +1,4 @@
-FROM arm32v6/alpine:3.6.2
+FROM arm32v6/alpine:3.6
 
 WORKDIR /app
 
