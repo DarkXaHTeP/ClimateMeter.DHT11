@@ -8,9 +8,11 @@ RUN git clone git://git.drogon.net/wiringPi
 
 RUN ln -s /usr/include/sys /usr/include/asm
 
-RUN make -C ./wiringPi/wiringPi static CFLAGS="$CFLAGS -I." LDFLAGS="$LDFLAGS" || return 1
+RUN sed -i 's|$(LDCONFIG)|$(LDCONFIG /app/wiringPi/wiringPi)|g' /app/wiringPi/wiringPi/Makefile
+
+RUN cd ./wiringPi/wiringPi/ && make -j5 && make install && cd ../..
 
 COPY ./src .
-RUN gcc -x c ./dht_reader.c -I./wiringPi/wiringPi -L./wiringPi/wiringPi -l wiringPi -o dht_reader
+RUN gcc ./dht_reader.c -l wiringPi -o dht_reader
 
 ENTRYPOINT [ "./dht_reader" ]
