@@ -10,9 +10,9 @@ RUN ln -s /usr/include/sys /usr/include/asm
 
 RUN sed -i 's|$(LDCONFIG)|$(LDCONFIG /app/wiringPi/wiringPi)|g' /app/wiringPi/wiringPi/Makefile
 
-RUN cd ./wiringPi/wiringPi/ && make -j5 && make install && cd ../..
+RUN cd ./wiringPi/wiringPi/ && make -j5 && make -j5 static && make install && make install-static && cd ../..
 
 COPY ./src .
-RUN gcc ./dht_reader.c -l wiringPi -o dht_reader
+RUN gcc ./dht_reader.c -static -l wiringPi -o dht_reader
 
 ENTRYPOINT [ "./dht_reader" ]
