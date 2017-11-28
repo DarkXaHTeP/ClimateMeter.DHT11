@@ -13,6 +13,7 @@ RUN sed -i 's|$(LDCONFIG)|$(LDCONFIG /app/wiringPi/wiringPi)|g' /app/wiringPi/wi
 RUN cd ./wiringPi/wiringPi/ && make -j5 && make -j5 static && make install && make install-static && cd ../..
 
 COPY ./src .
-RUN gcc ./dht_reader.c -static -l wiringPi -o dht_reader
+COPY ./reader .
+RUN cd /app/src && gcc ./dht11.c -static /usr/lib/wiringPi.a -o dht11.o && cp ./dht11.h /usr/include && cp ./dht11.so /usr/lib && cd ..
 
-ENTRYPOINT [ "./dht_reader" ]
+CMD [ "./reader/reader" ]
