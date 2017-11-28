@@ -17,13 +17,13 @@ int main( void )
 	{
 		if ( read_dht11_data() == 1)
         {
-            printf("Humidity = %d.%d %% Temperature = %d.%d *C\n", get_humidity(), get_temp());
+            printf("Humidity = %f %% Temperature = %f *C\n", get_humidity(), get_temp());
         }
         else
         {
             printf("Data is not good, skipping\n");
         }
-        
+
 		delay( 1000 ); /* wait 1sec to refresh */
 	}
 
