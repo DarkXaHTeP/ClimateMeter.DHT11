@@ -9,6 +9,7 @@
     extern float get_temp();
     extern float get_humidity();
     extern int read_dht11_data();
+    extern int retry_read_dht11_data(int max_retries);
 
     #ifdef __cplusplus
     }

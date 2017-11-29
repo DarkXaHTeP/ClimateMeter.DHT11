@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <unistd.h>
 
 #define MAXTIMINGS	85
 
@@ -102,4 +103,20 @@ int read_dht11_data()
     {
 		return 0;
 	}
+}
+
+int retry_read_dht11_data(int max_retries) {
+    int current = 0;
+
+    while (current < max_retries) {
+        if (read_dht11_data() == 1) {
+            return 1;
+        } else {
+            usleep(800 * 1000);
+        }
+
+        current++;
+    }
+
+    return 0;
 }
