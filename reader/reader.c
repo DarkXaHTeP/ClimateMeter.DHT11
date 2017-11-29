@@ -16,7 +16,7 @@ int main( void )
 
 	while ( 1 )
 	{
-		if ( read_dht11_data() == 1)
+		if ( retry_read_dht11_data(360) == 1)
         {
             printf("Humidity = %f %% Temperature = %f *C\n", get_humidity(), get_temp());
         }
