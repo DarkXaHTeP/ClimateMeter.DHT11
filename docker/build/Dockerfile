@@ -2,7 +2,7 @@ FROM arm32v6/alpine:3.6
 
 WORKDIR /app
 
-RUN apk add --no-cache --virtual git --virtual alpine-sdk --virtual linux-headers
+RUN apk add --no-cache git --virtual alpine-sdk linux-headers
 
 RUN git clone git://git.drogon.net/wiringPi
 
