@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    apk add --no-cache git build-essential
+    git build-essential
 
 RUN git clone git://git.drogon.net/wiringPi
 
