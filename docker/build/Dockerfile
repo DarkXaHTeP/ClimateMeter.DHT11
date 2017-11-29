@@ -2,7 +2,7 @@ FROM arm32v6/alpine:3.6
 
 WORKDIR /app
 
-RUN apk add --no-cache git alpine-sdk linux-headers
+RUN apk add --no-cache --virtual git --virtual alpine-sdk --virtual linux-headers
 
 RUN git clone git://git.drogon.net/wiringPi
 
@@ -22,8 +22,12 @@ RUN cd ./src && gcc -shared dht11.o wiringPi.o wiringSerial.o wiringShift.o piHi
 
 RUN cd ./src && cp ./dht11.h /usr/include && cp ./libdht11.so /usr/lib
 
+RUN rm -rf ./wiringPi && rm -rf ./src
+
 COPY ./reader ./reader
 
 RUN cd ./reader && gcc ./reader.c -o ./reader -l dht11
+
+RUN apk del git alpine-sdk linux-headers
 
 CMD [ "./reader/reader" ]
