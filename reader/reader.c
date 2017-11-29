@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int main( void )
 {
@@ -24,7 +25,7 @@ int main( void )
             printf("Data is not good, skipping\n");
         }
 
-		delay( 1000 ); /* wait 1sec to refresh */
+		usleep( 1000 * 1000); /* wait 1sec to refresh */
 	}
 
 	return(0);
