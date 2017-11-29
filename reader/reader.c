@@ -1,7 +1,7 @@
+#include <dht11.h>
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
-#include <dht11.h>
 
 int main( void )
 {
