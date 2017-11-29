@@ -10,10 +10,19 @@ RUN ln -s /usr/include/sys /usr/include/asm
 
 RUN sed -i 's|$(LDCONFIG)|$(LDCONFIG /app/wiringPi/wiringPi)|g' /app/wiringPi/wiringPi/Makefile
 
-RUN cd ./wiringPi/wiringPi/ && make -j5 && make -j5 static && make install && make install-static && cd ../..
+RUN cd ./wiringPi/wiringPi/ && make -j5
 
-COPY ./src .
-COPY ./reader .
-RUN cd /app/src && gcc ./dht11.c -static /usr/lib/wiringPi.a -o dht11.o && cp ./dht11.h /usr/include && cp ./dht11.so /usr/lib && cd ..
+COPY ./src ./src
+COPY ./reader ./reader
+
+RUN cd ./wiringPi/wiringPi && cp wiringPi.o wiringSerial.o wiringShift.o piHiPri.o piThread.o wiringPiSPI.o wiringPiI2C.o softPwm.o softTone.o mcp23008.o mcp23016.o mcp23017.o mcp23s08.o mcp23s17.o sr595.o pcf8574.o pcf8591.o mcp3002.o mcp3004.o mcp4802.o mcp3422.o max31855.o max5322.o ads1115.o sn3218.o bmp180.o htu21d.o ds18b20.o rht03.o drcSerial.o drcNet.o pseudoPins.o wpiExtensions.o ../../src
+
+RUN cd ./src && gcc -c -I../wiringPi/wiringPi -fPIC dht11.c -o dht11.o
+
+RUN cd ./src && gcc -shared dht11.o wiringPi.o wiringSerial.o wiringShift.o piHiPri.o piThread.o wiringPiSPI.o wiringPiI2C.o softPwm.o softTone.o mcp23008.o mcp23016.o mcp23017.o mcp23s08.o mcp23s17.o sr595.o pcf8574.o pcf8591.o mcp3002.o mcp3004.o mcp4802.o mcp3422.o max31855.o max5322.o ads1115.o sn3218.o bmp180.o htu21d.o ds18b20.o rht03.o drcSerial.o drcNet.o pseudoPins.o wpiExtensions.o -o libdht11.so
+
+RUN cp ./dht11.h /usr/include && cp ./dht11.so /usr/lib
+
+RUN cd ./reader && gcc ./reader.c -o ./reader -l dht11
 
 CMD [ "./reader/reader" ]
